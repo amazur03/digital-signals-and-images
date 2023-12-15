@@ -2,7 +2,7 @@ import numpy as np
 from skimage import io
 from matplotlib import pyplot as plt
 
-image = io.imread(r"CFA/Bayer/panda.jpg")
+image = io.imread(r"demosaicking/CFA/Bayer/panda.jpg")
 
 # Bayer filter
 demosaicking_convolution_mask = np.dstack([
