@@ -12,17 +12,17 @@ demosaicking_convolution_mask = np.dstack([
 ]) 
 
 # Convolve with Bayer filter
-def demosaic(image, kernel, scope):
+def demosaic(image, kernel, stride):
     kernel_height, kernel_width, _ = kernel.shape
-    result = np.zeros((image.shape[0] // scope, image.shape[1] // scope, image.shape[2]), dtype=np.uint8)
+    result = np.zeros((image.shape[0] // stride, image.shape[1] // stride, image.shape[2]), dtype=np.uint8)
 
-    for i in range(0, image.shape[0], scope):
-        for j in range(0, image.shape[1], scope):
+    for i in range(0, image.shape[0], stride):
+        for j in range(0, image.shape[1], stride):
             for k in range(image.shape[2]):
                 pool_region = image[i:i+kernel_height, j:j+kernel_width, k]
                 kernel_region = kernel[:, :, k]
                 pool_mean = np.sum(pool_region * kernel_region)
-                result[i // scope, j // scope, k] = pool_mean
+                result[i // stride, j // stride, k] = pool_mean
 
     return result
 
